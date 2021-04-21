@@ -31,7 +31,6 @@ export function Welcome() {
           style={styles.button}
           activeOpacity={0.7}
         >
-          
           <Feather 
             name='chevron-right' 
             style={styles.buttonIcon}
