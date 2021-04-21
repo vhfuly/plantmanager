@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, Text, StyleSheet, View, TextInput, KeyboardAvoidingView, Platform} from 'react-native';
 import colors from '../../styles/colors';
 import fonts from '../../styles/fonts';
 import { Button } from '../components/Button';
 
 export function UserIdentification() {
+
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
+  const [name, setName] = useState<string>();
+
+  function handleInputBlur() {
+    setIsFocused(false)
+    setIsFilled(!!name);
+  }
+  function handleInputFocus() {
+    setIsFocused(true)
+  }
+  function handleInputChange(value: string) {
+    setIsFilled(!!value);
+    setName(value)
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -16,7 +32,7 @@ export function UserIdentification() {
           <View style={styles.form}>
               <View style={styles.header}>
                 <Text style={styles.emoji}>
-                  😄 
+                 { isFilled ?  '😆' : '🙂' }
                 </Text>
                 <Text style={styles.title}>
                   Como podemos {'\n'}
@@ -24,8 +40,14 @@ export function UserIdentification() {
                 </Text>
               </View>
               <TextInput 
-                style={styles.input}
-                placeholder='Digite seu Nome'
+                style={[
+                  styles.input,
+                  (isFocused || isFilled) && { borderColor: colors.green}
+                ]}
+                placeholder='Digite seu nome'
+                onBlur={handleInputBlur}
+                onFocus={handleInputFocus}
+                onChangeText={handleInputChange}
               />
               <View style={styles.footer}>
                 <Button />
