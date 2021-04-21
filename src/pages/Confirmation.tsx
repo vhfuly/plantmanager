@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Text, StyleSheet, View, TextInput, KeyboardAvoidingView, Platform} from 'react-native';
 
-import colors from '../../styles/colors';
-import fonts from '../../styles/fonts';
+import colors from '../styles/colors';
+import fonts from '../styles/fonts';
 import { Button } from '../components/Button';
 
 export function Confirmation() {
@@ -20,7 +20,9 @@ export function Confirmation() {
           Agora vamos comerçar a cuidar das suas plantinhas com muito cuidado.
         </Text>
         <View style={styles.footer}>
-          <Button />
+          <Button 
+            title='Começar'
+          />
         </View>
       </View>
 
