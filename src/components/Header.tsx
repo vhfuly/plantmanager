@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 20,
     marginTop: getStatusBarHeight(),
-    padding: 20,
   },
   image: {
     width: 70,
@@ -36,7 +35,7 @@ const styles = StyleSheet.create({
   greeting: {
     fontSize: 32,
     color: colors.heading,
-    fontFamily: fonts.text
+    fontFamily: fonts.text,
   },
   userName: {
     fontSize: 32,
@@ -44,5 +43,4 @@ const styles = StyleSheet.create({
     fontFamily: fonts.heading,
     lineHeight: 40,
   },
-
 })
