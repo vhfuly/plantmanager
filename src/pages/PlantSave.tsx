@@ -10,25 +10,15 @@ import waterDrop from '../assets/waterdrop.png'
 import { Button } from '../components/Button';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
-import { platform } from 'os';
-interface Params {
-  id: string;
-  name: string;
-  about: string;
-  water_tips: string;
-  photo: string;
-  environments: [string],
-  frequency: {
-    times: number,
-    repeat_every: string;
-  }
-}
+import { PlantsProps, savePlant, loadPlant } from '../libs/storage';
+
+
 export function PlantSave() { 
   const [selectedDateTime, setSelectedDateTime] = useState(new Date ());  
   const [showDatePicker, setShowDatePicker] = useState(Platform.OS === 'ios');   
 
   const route = useRoute();
-  const plant = route.params as Params ;
+  const plant = route.params as PlantsProps ;
 
   function handleChangeTime(event: Event, dateTime: Date | undefined) {
     if (Platform.OS === 'android') {
@@ -47,6 +37,18 @@ export function PlantSave() {
     setShowDatePicker(oldState => !oldState);
   }
 
+  async function handleSave() {
+    const data = await loadPlant();
+    console.log(data);
+    // try {
+    //   await savePlant({
+    //     ...plant,
+    //     dateTimeNotification: selectedDateTime
+    //   })
+    // }catch {
+    //   Alert.alert('Não foi possível salvar 😢')
+    // }
+  }
 
   return (
     <View style={styles.container}>
@@ -102,7 +104,7 @@ export function PlantSave() {
 
           <Button 
             title='Cadastrar planta'
-            onPress={() => {}}
+            onPress={handleSave}
           />
       </View>
     </View>
