@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SafeAreaView, Text, StyleSheet, View, Image, ScrollView, Platform, TouchableOpacity, Alert} from 'react-native';
 import { SvgFromUri } from 'react-native-svg';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
-import { useRoute } from '@react-navigation/core';
+import { useRoute, useNavigation } from '@react-navigation/core';
 import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
 import { isBefore, format} from 'date-fns';
 
@@ -19,6 +19,8 @@ export function PlantSave() {
 
   const route = useRoute();
   const plant = route.params as PlantsProps ;
+
+  const navigation = useNavigation();
 
   function handleChangeTime(event: Event, dateTime: Date | undefined) {
     if (Platform.OS === 'android') {
@@ -38,16 +40,22 @@ export function PlantSave() {
   }
 
   async function handleSave() {
-    const data = await loadPlant();
-    console.log(data);
-    // try {
-    //   await savePlant({
-    //     ...plant,
-    //     dateTimeNotification: selectedDateTime
-    //   })
-    // }catch {
-    //   Alert.alert('Não foi possível salvar 😢')
-    // }
+    try {
+      await savePlant({
+        ...plant,
+        dateTimeNotification: selectedDateTime
+      });
+
+      navigation.navigate('Confirmation', {
+        title: 'Tudo Certo',
+        subtitle: 'Fique tranquilo que vamos sempre lembrar você de cuidar sa sua plantinha com muito cuidado',
+        buttonTitle: 'Muito Obrigado :D',
+        icon: 'hug',
+        nextScreen: 'MyPlants',
+      })
+    }catch {
+      Alert.alert('Não foi possível salvar 😢')
+    }
   }
 
   return (
