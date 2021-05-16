@@ -8,9 +8,10 @@ import colors from '../styles/colors';
 import { FlatList } from 'react-native-gesture-handler';
 import { PlantsProps, loadPlant } from '../libs/storage';
 import { formatDistance } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { pt } from 'date-fns/locale';
 import fonts from '../styles/fonts';
 import { PlantCardSecondary } from '../components/PlantCardSecondary';
+import { Load } from '../components/Load';
 
 export function MyPlants() {
 
@@ -25,7 +26,7 @@ export function MyPlants() {
       const nextTime = formatDistance(
         new Date(plantsStorage[0].dateTimeNotification).getTime(),
         new Date().getTime(),
-        { locale: ptBR }
+        { locale: pt }
       );
 
       setNextWatered(
@@ -35,7 +36,11 @@ export function MyPlants() {
       setLoading(false);
     }
     LoadStorageData();
-  })
+  });
+
+  if (loading)
+    return <Load />
+
   return (
     <View style={styles.container}>
       <Header />
